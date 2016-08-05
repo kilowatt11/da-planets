@@ -10,6 +10,7 @@
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({extended: true}))
     server.use('/', express.static(__dirname+'/public/planets'))
+    server.use('/', express.static(__dirname+'/public/stars'))
     server.use('/api',routes.router);
  
 

@@ -3,8 +3,9 @@
 
   const router = require('express').Router();
   const Galaxy = require('../models/galaxy-model')
-  module.exports.mountPath = '/galaxies'
-  module.exports.router = router;
+  
+  exports.mountPath = '/galaxies'
+  exports.router = router;
 
   router.route('/:id?')
     .get(function(req, res){

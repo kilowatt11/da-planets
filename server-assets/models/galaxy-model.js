@@ -1,12 +1,9 @@
 ;(function(){
 
-let uuid = require('node-uuid'),
-JsData = require('js-data'),
-NeDbAdapter = require('js-data-nedb'),
- DS = new JsData.DS();
- adapter = new NeDbAdapter();
-
- DS.registerAdapter('nedb',adapter,{default: true})
+let dataAdapter = require('./data-adapter'),
+  uuid = dataAdapter.uuid,
+  schemator = dataAdapter.schemator,
+  DS = dataAdapter.DS;
 
 let Galaxy = DS.defineResource({
     name: 'galaxy',
