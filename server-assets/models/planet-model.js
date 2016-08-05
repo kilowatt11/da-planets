@@ -9,6 +9,12 @@
         name: 'planet',
         filepath: __dirname + '/../data/planets.db',
         relations: {
+            hasMany: {
+                moon: {
+                    localField: 'moons',
+                    foreignKey: 'planetId'
+                }
+            },
             belongsTo: {
                 galaxy: {
                     localField: 'galaxy',
@@ -35,12 +41,13 @@
         Planet.create(planet).then(cb)
     }
 
-    function getAll(cb) {
-        Planet.findAll().then(function (planets) {
-            return cb(planets)
-        })
-
-    }
+     function getAll(cb){
+      let query = {}
+      let options = {
+          with: ['moon']
+      }
+     Planet.findAll({query, options}).then(cb);
+     }
 
     module.exports = {
         getAll,
