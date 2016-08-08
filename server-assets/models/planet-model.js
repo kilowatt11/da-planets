@@ -46,7 +46,7 @@
       let options = {
           with: ['moon']
       }
-     Planet.findAll({query, options}).then(cb);
+     Planet.findAll(query, options).then(cb);
      }
 
     module.exports = {

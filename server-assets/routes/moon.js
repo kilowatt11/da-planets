@@ -13,7 +13,7 @@
       });
     })
     .post(function(req, res){
-      Moon.createMoon(req.body.name, req.body.planetId, function(moon){
+      Moon.createMoon(req.body.name, req.body.planetId, req.body.galaxyId, function(moon){
         return res.send(moon)
       })
     })

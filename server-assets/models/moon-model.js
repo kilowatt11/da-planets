@@ -12,7 +12,12 @@
       belongsTo: {
         planet: {
           localField: 'planet',
-          foreignKey: 'planetId'
+          foreignKey: 'planetId',
+          parent: true
+        },
+        galaxy: {
+          localField: 'galaxy',
+          foreignKey: 'galaxyId'
         }
       }
     }
@@ -20,14 +25,16 @@
 
   schemator.defineSchema('Moon', {
     name: { type: 'string', nullable: false },
-    planetId: { type: 'string', nullable: false }
+    planetId: { type: 'string', nullable: false },
+    galaxyId: { type: 'string', nullable: false }
   })
 
-  function createMoon(name, planetId, cb) {
+  function createMoon(name, planetId, galaxyId,cb) {
     let moon = {
       id: uuid.v1(),
       name: name,
-      planetId: planetId
+      planetId: planetId,
+      galaxyId:galaxyId
     }
     let error = schemator.validateSync('Moon', moon);
     if (error) { return cb(error) }

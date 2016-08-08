@@ -18,8 +18,10 @@
       }
   })
   schemator.defineSchema('Star', {
+      id: {type: 'string', nullable: false},
       name: {type: 'string', nullable: false},
-      galaxyId: { type: 'string', nullable : false}
+      galaxyId: { type: 'string', nullable : false},
+    
   })
 
 function createStar(name, galaxyId, cb){
