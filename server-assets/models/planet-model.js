@@ -5,26 +5,32 @@
         schemator = dataAdapter.schemator,
         DS = dataAdapter.DS
 
-    let Planet = DS.defineResource({
-        name: 'planet',
-        filepath: __dirname + '/../data/planets.db',
-        relations: {
-            hasMany: {
-                moon: {
-                    localField: 'moons',
-                    foreignKey: 'planetId'
-                }
-            },
-            belongsTo: {
-                galaxy: {
-                    localField: 'galaxy',
-                    foreignKey: 'galaxyId'
-                }
-            }
+  let Planet = DS.defineResource({
+    name: 'planet',
+		endpoint: 'planets',
+    filepath: __dirname + '/../data/planets.db',
+    relations: {
+      belongsTo: {
+        galaxy: {
+          localField: 'galaxy',
+          foreignKey: 'galaxyId'
         }
-    })
+      },
+      hasMany: {
+        moon:{
+          localField: 'moons',
+          foreignKey: 'planetId'
+        },
+        species: {
+          localField: 'species',
+          foreignKeys: 'planetIds'
+        }
+      }
+    }
+  })
 
     schemator.defineSchema('Planet', {
+        id: { type: 'string', nullable: false },
         name: { type: 'string', nullable: false },
         galaxyId: { type: 'string', nullable: false }
 
@@ -42,16 +48,22 @@
     }
 
      function getAll(cb){
-      let query = {}
-      let options = {
-          with: ['moon']
-      }
-     Planet.findAll(query, options).then(cb);
+         Planet.findAll().then(cb);
+ 
+     }
+
+     function getById(id, cb){
+         let options = {
+             with: ['moon']
+         }
+         Planet.find(id,options).then(cb)
      }
 
     module.exports = {
         getAll,
-        createPlanet
+        createPlanet,
+        getById,
+        Planet
     }
 
 } ());

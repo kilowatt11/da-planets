@@ -7,6 +7,7 @@
 
   let Moon = DS.defineResource({
     name: 'moon',
+    endpoint: 'moons',
     filepath: __dirname + '/../data/moons.db',
     relations: {
       belongsTo: {
@@ -24,17 +25,18 @@
   })
 
   schemator.defineSchema('Moon', {
+    id: { type: 'string', nullable: false },
     name: { type: 'string', nullable: false },
     planetId: { type: 'string', nullable: false },
     galaxyId: { type: 'string', nullable: false }
   })
 
-  function createMoon(name, planetId, galaxyId,cb) {
+  function createMoon(name, planetId, galaxyId, cb) {
     let moon = {
       id: uuid.v1(),
       name: name,
       planetId: planetId,
-      galaxyId:galaxyId
+      galaxyId: galaxyId
     }
     let error = schemator.validateSync('Moon', moon);
     if (error) { return cb(error) }

@@ -9,10 +9,9 @@
     basePath:process.env.DBCONNECTION || 'https://starsandmoons-78919.firebaseio.com/'
   })
   schemator = new Schemator(),
-  adapter = new NeDbAdapter(),
   DS = new JsData.DS();
 
-  DS.registerAdapter('nedb', adapter, { default: true })
+  DS.registerAdapter('firebase', fbAdapter, { default: true })
 
   module.exports = {
       DS,

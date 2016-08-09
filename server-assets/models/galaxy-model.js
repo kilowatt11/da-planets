@@ -7,6 +7,7 @@
 
     let Galaxy = DS.defineResource({
         name: 'galaxy',
+        endpoint: 'galaxies',
         filepath: __dirname + '/../data/galaxies.db',
         relations: {
             hasMany: {
@@ -21,8 +22,11 @@
                 moon: {
                     localField: 'moons',
                     foriegnKey: 'galaxyId'
+                },
+                species: {
+                    localField: 'species',
+                    foreignKey: 'galaxyIds'  
                 }
-
             }
         }
     })
@@ -33,22 +37,38 @@
             id: uuid.v1(),
             name: name
         }).then(cb)
-
     }
 
-    function getAll(cb) {
-        let query = {}
-        let options = {
-            with: ['planet', 'star']
+
+    function formatQuery(query){
+        if(query){
+            query = query.split(',').join(' ').split(' ')
         }
-        Galaxy.findAll(query, options).then(cb);
+        let options ={
+            with: query
+        }
+        return options
+    }
+
+
+    function getAll(query,cb) {
+        query = formatQuery(query);
+        Galaxy.findAll({}, query).then(cb);
+    }
+
+
+
+    function getById(id, query,cb){
+        query = formatQuery(query);
+        Galaxy.find(id,query).then(cb)
     }
 
 
 
     module.exports = {
         getAll,
-        createGalaxy
+        createGalaxy,
+        getById
     }
 
 } ());
